@@ -66,7 +66,7 @@
 
     <main class="container-xxl py-3 mt-5">
        <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
+            <div class="col border border-3">
                 <form action="#">
                     <label for="loanAmount" class="form-label mb-0">
                         Loan Amount
@@ -77,7 +77,6 @@
                         type="number"
                         required aria-label="Loan Amount"
                         name = "loanAmount"
-                        value = "0"
                         min = "100" />
                     <label for="term-Months" class="form-label mb-0 mt-4">
                         Term (Months)
@@ -88,7 +87,6 @@
                         type="number"
                         required aria-label="Term-Months"
                         name = "term-Months"
-                        value = "0"
                         min = "100" />
                     <label for="interestRate" class="form-label mb-0 mt-4">
                         Interest Rate
@@ -99,18 +97,23 @@
                         type="number"
                         required aria-label="Interest Rate"
                         name = "interestRate"
-                        value = "0"
                         min = "100" />
+                    <div class="mt-5">
+                        <button type="button" class="btn btn-primary" id="btnSubmit">
+                            Calculate
+                        </button>
+                    </div>
+
                 </form>
             </div>
-            <div class="col g-3 text-center">
+            <div class="col g-3 text-center border border-3">
                 <h1 class="fw-bold">Your Monthly Payments</h1>
                 <hr>
-                <article class="m-3" id="monthlyPayment">placeholder</article>
+                <article class="m-3" id="monthlyPayment">$0.00</article>
                 <div>
-                    <p><span>Total Principal:</span><span id="totalLoan">Placeholder</span></p>
-                    <p><span>Total Interest:</span><span id="totalInterest">Placeholder</span></p>
-                    <p><span>Total Cost:</span><span id="totalCost">Placeholder</span></p>
+                    <p><span>Total Principal:</span><span id="totalLoan">$0.00</span></p>
+                    <p><span>Total Interest:</span><span id="totalInterest">$0.00</span></p>
+                    <p><span>Total Cost:</span><span id="totalCost">$0.00</span></p>
                 </div>
             </div> 
        </div>
@@ -175,7 +178,7 @@
 
     <script>
         let button = document.getElementById('btnSubmit');
-        button.addEventListener('click', displayMessage);
+        button.addEventListener('click', getValues);
     </script>
 
 </body>
