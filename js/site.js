@@ -42,8 +42,7 @@ function getValues() {
          totalInterest: totalInterest,
          totalMonthPayment: totalMonthPayment,
          principalPayment: principalPayment,
-         remainingBalance: remainingBalance,
-         orginalBalance: loanAmount
+         remainingBalance: remainingBalance
        };
       
        values.push(loanPayment);
@@ -77,7 +76,7 @@ function generatePrincipalPayment(totalMonthPayment, interestPayment) {
 //Generate a table based on calculations
 function displayTable(numberArray, loanAmount) {
   let total = 0;
-  let tableHtml = '<tr>';
+  let tableHtml = '';
   let tbody = document.getElementById('results');
 
   let monthlyPayment = document.getElementById('monthlyPayment');
@@ -107,7 +106,7 @@ function displayTable(numberArray, loanAmount) {
     
     tableHtml += `<tr><td>${month}</td><td>${decimalMonthPayment}</td>
         <td>${decimalPrincipal}</td><td>${decimalInterest}</td>
-        <td>${decimalTotalInterest}</td><td>${decimalBalance}</td>`
+        <td>${decimalTotalInterest}</td><td>${decimalBalance}</td></tr>`
     tbody.innerHTML = tableHtml;
     
     monthlyPayment.innerHTML = `$ ${decimalMonthPayment}`;
