@@ -110,10 +110,10 @@ function displayTable(numberArray, loanAmount) {
         <td>${decimalTotalInterest}</td><td>${decimalBalance}</td>`
     tbody.innerHTML = tableHtml;
     
-    monthlyPayment.innerHTML = `$${decimalMonthPayment}`;
-    totalLoan.innerHTML = `$${decimalLoan}`;
-    displayInterest.innerHTML = `$${decimalTotalInterest}`;
-    totalCost.innerHTML = `$${decimalTotal}`;
+    monthlyPayment.innerHTML = `$ ${decimalMonthPayment}`;
+    totalLoan.innerHTML = `$ ${decimalLoan}`;
+    displayInterest.innerHTML = `$ ${decimalTotalInterest}`;
+    totalCost.innerHTML = `$ ${decimalTotal}`;
   }
 
 }
