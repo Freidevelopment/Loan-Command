@@ -124,7 +124,7 @@ footer .bi:hover {
 /* #endregion custom button color */
 
 .app-logo {
-    max-width: 450px;
+    max-width: 800px;
 }
 
 .checklist {
@@ -138,4 +138,13 @@ footer .bi:hover {
 .devicons {
     font-size: 3.5rem;
 }
+
+.backgroundFirstColors {
+    background-color: var(--njf-theme-200);
+}
+.backgroundSecondColors {
+    background-color: var(--njf-theme-150);
+}
+
+
 
