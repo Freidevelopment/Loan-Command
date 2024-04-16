@@ -7,98 +7,113 @@ function getValues() {
   loanAmount = Number(loanAmount);
   termMonths = Number(termMonths);
   interestRate = Number(interestRate);
-  
+
   // Validate user inputs
   if (isNaN(loanAmount) || isNaN(termMonths) || isNaN(interestRate)) {
-      // display an error message
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops!',
-        text: 'Please enter valid numbers for Loan Command to use',
-        backdrop: false
+    // display an error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops!',
+      text: 'Please enter valid numbers for Loan Command to use',
+      backdrop: false
     });
   } else {
     let totalMonthPayment = generateMonthPayment(loanAmount, termMonths, interestRate);
-    displayPayments(totalMonthPayment, loanAmount, termMonths, interestRate);
     let values = generateValues(totalMonthPayment, loanAmount, termMonths, interestRate);
-
-    displayTable(values);
     
-}
+    displayTable(values, loanAmount);
 
-// generate the calculations
-function generateValues(totalMonthPayment, loanAmount, months, interestRate) {
+  }
+
+  // generate the calculations
+  function generateValues(totalMonthPayment, loanAmount, months, interestRate) {
     let remainingBalance = loanAmount;
     let values = [];
-    let oldInterestPayment = 0;
-    for(let month = 1; month <= months; month++) {
+    let totalInterest = 0;
+    for (let i = 1; i <= months; i++) {
+      let interestPayment = generateInterestPayment(remainingBalance, interestRate);
+      totalInterest = totalInterest + interestPayment;
+      let principalPayment = generatePrincipalPayment(totalMonthPayment, interestPayment);
+      remainingBalance = remainingBalance - principalPayment;
       
-    let interestPayment = generateInterestPayment(remainingBalance, interestRate);
-    let totalInterest = oldInterestPayment + interestPayment;
-    let principalPayment = generatePrincipalPayment(totalMonthPayment, interestPayment);
-    remainingBalance = remainingBalance - principalPayment;
-    values.push(month);
-    values.push(totalMonthPayment);
-    values.push(principalPayment);
-    values.push(interestPayment);
-    values.push(totalInterest);
-    values.push(remainingBalance);
-    
-  }
-  return values;
+       let loanPayment = {
+         month: i,
+         interestPayment: interestPayment,
+         totalInterest: totalInterest,
+         totalMonthPayment: totalMonthPayment,
+         principalPayment: principalPayment,
+         remainingBalance: remainingBalance,
+         orginalBalance: loanAmount
+       };
+      
+       values.push(loanPayment);
 
-}
+    }
+
+    return values;
+
+  }
 }
 
 // Generate Total Monthly Payment
 function generateMonthPayment(loanAmount, months, interestRate) {
-    let calculations = (loanAmount) * (interestRate / 1200) / (1 - Math.pow((1 + interestRate / 1200),  (-months)));
-    return calculations;
+  let calculations = (loanAmount) * (interestRate / 1200) / (1 - Math.pow((1 + interestRate / 1200), (-months)));
+  return calculations;
 }
 
 // generate Interest Payment
 function generateInterestPayment(remainingBalance, interestRate) {
-    let calculations = 0;
-    calculations = remainingBalance * (interestRate / 1200);
-    return calculations;
+  let calculations = 0;
+  calculations = remainingBalance * (interestRate / 1200);
+  return calculations;
 }
 // Principal Payment
-function generatePrincipalPayment(totalMonthPayment, interestPayment){
-    let calculations = 0;
-    calculations = totalMonthPayment - interestPayment;
-    return calculations;
+function generatePrincipalPayment(totalMonthPayment, interestPayment) {
+  let calculations = 0;
+  calculations = totalMonthPayment - interestPayment;
+  return calculations;
 }
 
 //Generate a table based on calculations
-function displayTable(numberArray) {
-    let tableHtml = '<tr>';
-    let tbody = document.getElementById('results');
+function displayTable(numberArray, loanAmount) {
+  let total = 0;
+  let tableHtml = '<tr>';
+  let tbody = document.getElementById('results');
 
-    for(let index = 0; index < numberArray.length; index++) {
-        let result = numberArray[index];
-        result.toFixed(2);
+  let monthlyPayment = document.getElementById('monthlyPayment');
+  let totalLoan = document.getElementById('totalLoan');
+  let totalCost = document.getElementById('totalCost');
+  let displayInterest = document.getElementById('displayInterest');
+
+  let decimalLoan = loanAmount.toFixed(2);
+  
+  for (let index = 0; index < numberArray.length; index++) {
+    total = loanAmount + numberArray[index].totalInterest;
+    
+    let month = numberArray[index].month;
+    let interestPayment = numberArray[index].interestPayment;
+    let totalInterest = numberArray[index].totalInterest;
+    let totalMonthPayment = numberArray[index].totalMonthPayment;
+    let principalPayment = numberArray[index].principalPayment;
+    let remainingBalance = numberArray[index].remainingBalance;
+    
+    let decimalInterest = interestPayment.toFixed(2);
+    let decimalTotalInterest = totalInterest.toFixed(2);
+    let decimalMonthPayment = totalMonthPayment.toFixed(2);
+    let decimalPrincipal = principalPayment.toFixed(2);
+    let decimalBalance = remainingBalance.toFixed(2);
+    let decimalTotal = total.toFixed(2);
 
     
-      if(index % 6 == 0) {
-        tableHtml += '</tr><tr>'
-      }
-        tableHtml += `<td>${result}</td>`
-        tbody.innerHTML = tableHtml;
-      }
-
-}
-
-function displayPayments(totalMonthPayment, loanAmount, months, interestRate) {
-    let monthlyPayment = document.getElementById('monthlyPayment');
-    let totalLoan = document.getElementById('totalLoan');
-    let totalInterest = document.getElementById('totalInterest');
-    let totalCost = document.getElementById('totalCost');
-
-    let interestTotal = loanAmount * (interestRate / 1200) * months;
-    let fullCost = loanAmount + interestTotal;
+    tableHtml += `<tr><td>${month}</td><td>${decimalMonthPayment}</td>
+        <td>${decimalPrincipal}</td><td>${decimalInterest}</td>
+        <td>${decimalTotalInterest}</td><td>${decimalBalance}</td>`
+    tbody.innerHTML = tableHtml;
     
-    monthlyPayment.innerHTML = `${totalMonthPayment}`;
-    totalLoan.innerHTML = `${loanAmount}`;
-    totalInterest.innerHTML = `${interestTotal}`;
-    totalCost.innerHTML = `${fullCost}`;
+    monthlyPayment.innerHTML = `$${decimalMonthPayment}`;
+    totalLoan.innerHTML = `$${decimalLoan}`;
+    displayInterest.innerHTML = `$${decimalTotalInterest}`;
+    totalCost.innerHTML = `$${decimalTotal}`;
+  }
+
 }
