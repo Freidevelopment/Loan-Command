@@ -25,33 +25,34 @@ function getValues() {
 
   }
 
-  // generate the calculations
-  function generateValues(totalMonthPayment, loanAmount, months, interestRate) {
-    let remainingBalance = loanAmount;
-    let values = [];
-    let totalInterest = 0;
-    for (let i = 1; i <= months; i++) {
-      let interestPayment = generateInterestPayment(remainingBalance, interestRate);
-      totalInterest = totalInterest + interestPayment;
-      let principalPayment = generatePrincipalPayment(totalMonthPayment, interestPayment);
-      remainingBalance = remainingBalance - principalPayment;
-      
-       let loanPayment = {
-         month: i,
-         interestPayment: interestPayment,
-         totalInterest: totalInterest,
-         totalMonthPayment: totalMonthPayment,
-         principalPayment: principalPayment,
-         remainingBalance: remainingBalance
-       };
-      
-       values.push(loanPayment);
+}
 
-    }
-
-    return values;
+// generate the calculations
+function generateValues(totalMonthPayment, loanAmount, months, interestRate) {
+  let remainingBalance = loanAmount;
+  let values = [];
+  let totalInterest = 0;
+  for (let i = 1; i <= months; i++) {
+    let interestPayment = generateInterestPayment(remainingBalance, interestRate);
+    totalInterest = totalInterest + interestPayment;
+    let principalPayment = generatePrincipalPayment(totalMonthPayment, interestPayment);
+    remainingBalance = remainingBalance - principalPayment;
+    
+     let loanPayment = {
+       month: i,
+       interestPayment: interestPayment,
+       totalInterest: totalInterest,
+       totalMonthPayment: totalMonthPayment,
+       principalPayment: principalPayment,
+       remainingBalance: remainingBalance
+     };
+    
+     values.push(loanPayment);
 
   }
+
+  return values;
+
 }
 
 // Generate Total Monthly Payment
