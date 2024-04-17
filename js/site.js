@@ -105,9 +105,9 @@ function displayTable(numberArray, loanAmount) {
     let decimalTotal = total.toFixed(2);
 
     
-    tableHtml += `<tr><td>${month}</td><td>${decimalMonthPayment}</td>
-        <td>${decimalPrincipal}</td><td>${decimalInterest}</td>
-        <td>${decimalTotalInterest}</td><td>${decimalBalance}</td></tr>`
+    tableHtml += `<tr><td>${month}</td><td>$${decimalMonthPayment}</td>
+        <td>$${decimalPrincipal}</td><td>$${decimalInterest}</td>
+        <td>$${decimalTotalInterest}</td><td>$${decimalBalance}</td></tr>`
     tbody.innerHTML = tableHtml;
     
     monthlyPayment.innerHTML = `$ ${decimalMonthPayment}`;
