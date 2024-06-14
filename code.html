@@ -107,7 +107,7 @@
                         let remainingBalance = loanAmount;
                         let values = [];
                         let totalInterest = 0;
-                        for (let i = 1; i <= months; i++) {
+                        for (let i = 1; i &lt= months; i++) {
                             let interestPayment = generateInterestPayment(remainingBalance, interestRate);
                             totalInterest = totalInterest + interestPayment;
                             let principalPayment = generatePrincipalPayment(totalMonthPayment, interestPayment);
@@ -162,7 +162,7 @@
 
                         let decimalLoan = loanAmount.toFixed(2);
                         
-                        for (let index = 0; index < numberArray.length; index++) {
+                        for (let index = 0; index &lt numberArray.length; index++) {
                             total = loanAmount + numberArray[index].totalInterest;
                             
                             let month = numberArray[index].month;
@@ -180,9 +180,9 @@
                             let decimalTotal = total.toFixed(2);
 
                             
-                            tableHtml += `<tr><td>${month}</td><td>${decimalMonthPayment}</td>
-                                <td>${decimalPrincipal}</td><td>${decimalInterest}</td>
-                                <td>${decimalTotalInterest}</td><td>${decimalBalance}</td></tr>`
+                            tableHtml += `&lttr>&lttd>${month}&lt/td>&lttd>${decimalMonthPayment}&lt/td>
+                            &lttd>${decimalPrincipal}&lt/td>&lttd>${decimalInterest}&lt/td>
+                            &lttd>${decimalTotalInterest}&lt/td>&lttd>${decimalBalance}&lt/td>&lt/tr>`
                             tbody.innerHTML = tableHtml;
                             
                             monthlyPayment.innerHTML = `$ ${decimalMonthPayment}`;
